@@ -28,7 +28,7 @@ trait IsSitemappable
 			'entity_type' => get_class($model),
 		]);
 		$sitemap->restore();
-		$sitemap->urls   = $model->toSitemappableArray();
+		$sitemap->urls   = $model->canonical;
 		$sitemap->vhosts = ($model->vhosts ?? null);
 		$sitemap->save();
 	}
@@ -56,15 +56,5 @@ trait IsSitemappable
 	public function shouldBeSitemappable()
 	{
 		return true;
-	}
-
-	/**
-	 * Returns an array with the (localized) URLs.
-	 *
-	 * @return array
-	 */
-	public function toSitemappableArray()
-	{
-		return [];
 	}
 }
