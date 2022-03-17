@@ -25,7 +25,7 @@ class SitemappableController extends Controller
 
 			$sitemappables = Sitemappable::where(function ($query) {
 								$query->whereJsonContains('vhosts', $this->vhost->id)
-									  ->orWhereNull('vhosts')
+									  ->orWhereNull('vhosts');
 							})
 							->get()
 							->concat($otherRoutes)
