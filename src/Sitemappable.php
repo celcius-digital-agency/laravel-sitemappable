@@ -12,7 +12,8 @@ class Sitemappable extends Model
 	public $guarded  = [];
 
 	protected $casts = [
-		'urls' => 'array',
+		'urls'   => 'array',
+		'vhosts' => 'array',
 	];
 
 	public function __construct(array $attributes = [])

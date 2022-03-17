@@ -65,6 +65,7 @@ class ImportCommand extends Command
 					'entity_id'   => $model->id,
 					'entity_type' => $class,
 					'urls'        => $model->toSitemappableArray(),
+					'vhosts' 	  => ($model->vhosts ?? null),
 				]);
 			}
 		});

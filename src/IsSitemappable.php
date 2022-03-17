@@ -28,7 +28,8 @@ trait IsSitemappable
 			'entity_type' => get_class($model),
 		]);
 		$sitemap->restore();
-		$sitemap->urls = $model->toSitemappableArray();
+		$sitemap->urls   = $model->toSitemappableArray();
+		$sitemap->vhosts = ($model->vhosts ?? null);
 		$sitemap->save();
 	}
 

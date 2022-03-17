@@ -7,18 +7,31 @@ use Vursion\LaravelSitemappable\Sitemappable;
 
 class SitemappableController extends Controller
 {
+	protected $vhost;
+
+	public function __construct()
+	{
+		$this->vhost = app()->make('vhost');
+	}
+
 	public function index()
 	{
-		$content = Cache::remember('sitemap.xml', \DateInterval::createFromDateString(config('sitemappable.cache')), function () {
+		$content = Cache::remember('sitemap_' . $this->vhost->slug . '.xml', \DateInterval::createFromDateString(config('sitemappable.cache')), function () {
 			$otherRoutes = collect($this->otherRoutes())->map(function ($route) {
 				return new Sitemappable([
 					'urls' => $route,
 				]);
 			});
 
-			$sitemappables = Sitemappable::get()->concat($otherRoutes)->filter(function ($sitemappable) {
-				return (is_array($sitemappable->urls) && count($sitemappable->urls) > 0);
-			});
+			$sitemappables = Sitemappable::where(function ($query) {
+								$query->whereJsonContains('vhosts', $this->vhost->id)
+									  ->orWhereNull('vhosts')
+							})
+							->get()
+							->concat($otherRoutes)
+							->filter(function ($sitemappable) {
+								return (is_array($sitemappable->urls) && count($sitemappable->urls) > 0);
+							});
 
 			return view('sitemappable::sitemap', compact('sitemappables'))->render();
 		});
