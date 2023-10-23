@@ -28,6 +28,13 @@ class SitemappableController extends Controller
 									  ->orWhereNull('vhosts');
 							})
 							->get()
+							->map(function ($sitemappable) {
+								$sitemappable['urls'] = collect($sitemappable['urls'])->map(function ($url) {
+									return 'https://' . $this->vhost->domain_production . $url;
+								});
+
+								return $sitemappable;
+							})
 							->concat($otherRoutes)
 							->filter(function ($sitemappable) {
 								return (is_array($sitemappable->urls) && count($sitemappable->urls) > 0);

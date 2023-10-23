@@ -64,7 +64,9 @@ class ImportCommand extends Command
 				Sitemappable::create([
 					'entity_id'   => $model->id,
 					'entity_type' => $class,
-					'urls'        => $model->canonical,
+					'urls'        => $model->canonical->map(function ($url) {
+						return parse_url($url)['path'];
+					}),
 					'vhosts' 	  => ($model->vhosts ?? null),
 				]);
 			}
