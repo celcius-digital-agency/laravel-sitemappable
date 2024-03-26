@@ -2,7 +2,9 @@
 
 namespace Vursion\LaravelSitemappable;
 
+use App\Models\Vhosts\Vhost;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use ReflectionClass;
@@ -22,6 +24,10 @@ class ImportCommand extends Command
 
 		$this->process();
 
+		Vhost::get()->each(function ($vhost) {
+			Cache::forget('sitemap_' . $vhost->slug . '.xml');
+		});
+		
 		$this->table(['Model', 'Result'], $this->results);
 	}
 
