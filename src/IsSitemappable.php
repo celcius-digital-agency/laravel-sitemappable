@@ -33,7 +33,9 @@ trait IsSitemappable
 		$sitemap->urls   = $model->canonical->map(function ($url) {
 			return parse_url($url)['path'];
 		});
-		$sitemap->vhosts = ($model->vhosts ?? null);
+		$sitemap->created_at = ($model->created_at ?? null);
+		$sitemap->updated_at = ($model->updated_at ?? null);
+		$sitemap->vhosts     = ($model->vhosts ?? null);
 		$sitemap->save();
 	}
 

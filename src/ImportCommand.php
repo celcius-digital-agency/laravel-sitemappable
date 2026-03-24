@@ -73,6 +73,8 @@ class ImportCommand extends Command
 					'urls'        => $model->canonical->map(function ($url) {
 						return parse_url($url)['path'];
 					}),
+					'created_at'  => ($model->created_at ?? null),
+					'updated_at'  => ($model->updated_at ?? null),
 					'vhosts' 	  => ($model->vhosts ?? null),
 				]);
 			}
