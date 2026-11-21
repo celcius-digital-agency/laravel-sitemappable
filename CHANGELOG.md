@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-sitemappable` will be documented in this file
 
+## 1.13.0 - 2026-11-21
+- Support PHP 8.6
+
+## 1.12.0 - 2026-03-24
+- Persist model created_at and updated_at timestamps to Sitemap entries
+
+## 1.11.0 - 2026-03-24
+- Make shouldBeSitemappable an abstract method
+
 ## 1.10.0 - 2026-03-17
 - Support Laravel 13
 - Support PHP 8.5
